@@ -1,4 +1,4 @@
-
+# Helper functions for data preprocessing
 import os
 import numpy as np
 import pandas as pd
@@ -9,7 +9,6 @@ from xgboost import XGBClassifier
 from sklearn.decomposition import PCA
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import MinMaxScaler
-
 
 def process_data(path):
     """
@@ -25,7 +24,6 @@ def process_data(path):
                      keys=('ask', 'bid', 'askVol', 'bidVol', 'returns'), axis=1)
     data.columns.names = ['features', 'tickers']
     data.dropna(inplace=True)
-
     return data
 
 def generate_features(data, freq, lags):
@@ -40,7 +38,6 @@ def generate_features(data, freq, lags):
     for lag in range(1, lags + 1):
         data[f'midChange_lag{lag}'] = np.log(data['mid'] / data['mid'].shift(lag))
         data[f'mom_lag{lag}'] = data[f'midChange_lag{lag}'].sub(data.midChange_lag1)
-
     return data.fillna(0)
 
 def train_test_split(data, train_size):
@@ -74,7 +71,6 @@ def generate_signal(data, train_size, model, fitPCA=True, n_components=5):
     test_data['signal'] = model.predict(test_x)
     return test_data
 
-
 def generate_weights(data, train_size, model, fitPCA=True, n_components=5):
     unique_tickers = data.unstack('tickers')['ask'].columns.unique()
     weights = {}
@@ -99,7 +95,6 @@ def compute_pnl(weights, data, cost=0.002):
     SR_ratio.loc['Sharpe Ratio', 'ex-Cost'] = pnl['pnl_2'].mean() / pnl['pnl_2'].std()
     SR_ratio.loc['Sharpe Ratio', 'Benchmark'] = pnl['Benchmark'].mean() / pnl['Benchmark'].std()
     return pnl, SR_ratio
-
 
 if __name__ == '__main__':
     path = '../Data/Trading Alpha'
