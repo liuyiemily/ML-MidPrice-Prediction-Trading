@@ -1,3 +1,4 @@
+# Implement various regression models
 import numpy as np
 import pandas as pd
 from sklearn import preprocessing
@@ -9,11 +10,9 @@ from sklearn.linear_model import ElasticNetCV, ElasticNet
 from sklearn.ensemble import RandomForestRegressor
 import lightgbm as lgbm
 from xgboost import XGBRegressor
-
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import r2_score
 from sklearn.metrics import mean_squared_error
-
 
 def apply_pca(x_train, x_test, num_pca=10, standardize=True):
     # Standardize
@@ -42,7 +41,6 @@ def apply_pca(x_train, x_test, num_pca=10, standardize=True):
 
 def regress_model(x_train, y_train, x_test, y_test, model, optimized=False, nfolds=10, verbose=False):
     '''
-
     :param
         x_train, y_train, x_test, y_test: train and test sets
         model: str, can be 'LinearRegression', 'Ridge Regression', 'Lasso Regression', 'ElasticNet', 'Random Forest', 'LightGBM', 'XGBoost'
