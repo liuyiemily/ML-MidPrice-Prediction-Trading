@@ -15,14 +15,14 @@ from tensorflow import keras
 
 def classification_model(x_train, y_train, x_test, y_test, model, optimized=False, nfolds=10, verbose=False, random_state=123):
     '''
-       :param
-           x_train, y_train, x_test, y_test: train and test sets
-           model: str, can be 'LogisticRegression', 'Ridge', 'SVC', 'KNC', 'Random Forest', 'LightGBM', 'XGBoost'
-           nfolds: number of folds for GridSearch, default to be 10
-           optimized: True if run GridSearchCV, False otherwise
+    :param
+       x_train, y_train, x_test, y_test: train and test sets
+       model: str, can be 'LogisticRegression', 'Ridge', 'SVC', 'KNC', 'Random Forest', 'LightGBM', 'XGBoost'
+       nfolds: number of folds for GridSearch, default to be 10
+       optimized: True if run GridSearchCV, False otherwise
 
-       :return:
-           r2_score and mean_squared_error for both train and test set
+    :return:
+       r2_score and mean_squared_error for both train and test set
     '''
 
     table = pd.DataFrame(index=['F1', 'Accuracy', 'Precision', 'Recall'], columns=['Train', 'Test'])
