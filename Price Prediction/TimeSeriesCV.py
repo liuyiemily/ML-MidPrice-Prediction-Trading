@@ -1,9 +1,11 @@
-# Utility function to yield train and test index for rolling-window testing purpose
+## Utility function to yield train and test index for rolling-window testing purpose
+
 class TimeSeriesCV:
     """
     Generates train_idx, test_idx tuples
     assumes the dataframe has index 'time'
     """
+    
     def __init__(self, n_cv, train_length, test_length, lookahead):
         self.n_cv = n_cv
         self.train_length = train_length
