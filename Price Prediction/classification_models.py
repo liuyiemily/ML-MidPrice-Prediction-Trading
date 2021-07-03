@@ -1,3 +1,4 @@
+# Implement various ML Classification models
 import numpy as np
 import pandas as pd
 from sklearn.pipeline import make_pipeline
@@ -22,7 +23,7 @@ def classification_model(x_train, y_train, x_test, y_test, model, optimized=Fals
 
        :return:
            r2_score and mean_squared_error for both train and test set
-       '''
+    '''
 
     table = pd.DataFrame(index=['F1', 'Accuracy', 'Precision', 'Recall'], columns=['Train', 'Test'])
     if model == 'LogisticRegression':
@@ -56,7 +57,6 @@ def classification_model(x_train, y_train, x_test, y_test, model, optimized=Fals
     table.loc['Precision', :] = [train_precision, test_precision]
     table.loc['Recall', :] = [train_recall, test_recall]
     return table
-
 
 def cnn1d_model(x_train, y_train, x_test, y_test, model, epochs=1, batch_size=100, dropout=0.2, learning_rate=0.001):
     print('Running CNN1D with Maxpooling')
