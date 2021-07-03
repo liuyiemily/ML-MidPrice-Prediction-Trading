@@ -1,3 +1,5 @@
+## Python Module for Data Preprocessing
+
 import os
 import numpy as np
 import pandas as pd
@@ -45,20 +47,27 @@ def extract_and_combine_data(order_book, date):
 
     # return order_1, order_2, order_3
 
-# turn the unevenly spaced time series into evenly freq spaced time series
+
 def normalize_data(df, freq='s'):
+    """
+    turn the unevenly spaced time series into evenly freq spaced time series
+    """
     return df.resample(freq).last().ffill()
 
 def generate_features(df):
-    '''
+    """
     generate features:
         1. raw data, 11-level LOB data
         2. Time-insensitive data: spread & mid-price, price differences, price and volume means, accumulated differences
-    :param df:
+    Parameters
+    ----------
+    df: DataFrame
         evenly sampled time series LOB data
-    :return:
-        dataframe with features
-    '''
+    Returns
+    -------
+    dataframe with features
+    """
+    
     # Spread & Mid-price
     df['Mid'] = (df['Pa_1'] + df['Pb_1']) / 2
     df['Spread'] = df['Pa_1'] - df['Pb_1']
@@ -87,17 +96,23 @@ def generate_features(df):
     return df
 
 def generate_x_y(df, forecast_horizon, regression=True, threshold=0.002):
-    '''
-        split the dataframe into regressors X and response y according to forecast horizon, regression or classification
-    :param df:
-        dataframe with all features and response variable
-        forecast_horizon: forecast horizon
-        regression: regression or classification
-        threshold: only used in classification
+    """
+    split the dataframe into regressors X and response y according to forecast horizon, regression or classification
+    Parameters
+    ----------
+    df: DataFrame 
+        DataFrame with all features and response variable
+    forecast_horizon: int
+        forecast horizon
+    regression: bool
+        regression or classification
+    threshold: float
+        only used in classification
 
-    :return:
-        features X and response y
-    '''
+    Returns
+    -------
+    features X and response y
+    """
 
     if regression:
         # response variable is the mid price
