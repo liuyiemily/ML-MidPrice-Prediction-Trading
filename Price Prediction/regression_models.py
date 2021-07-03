@@ -1,4 +1,5 @@
-# Implement various regression models
+## Implement various regression models
+
 import numpy as np
 import pandas as pd
 from sklearn import preprocessing
@@ -40,16 +41,22 @@ def apply_pca(x_train, x_test, num_pca=10, standardize=True):
     return pca, x_train_pca, x_test_pca, loadings
 
 def regress_model(x_train, y_train, x_test, y_test, model, optimized=False, nfolds=10, verbose=False):
-    '''
-    :param
-        x_train, y_train, x_test, y_test: train and test sets
-        model: str, can be 'LinearRegression', 'Ridge Regression', 'Lasso Regression', 'ElasticNet', 'Random Forest', 'LightGBM', 'XGBoost'
-        nfolds: number of folds for GridSearch, default to be 10
-        optimized: True if run GridSearchCV, False otherwise
+    """
+    Parameters
+    ----------
+    x_train, y_train, x_test, y_test: DataFrame
+        train and test sets
+    model: str
+        str, can be 'LinearRegression', 'Ridge Regression', 'Lasso Regression', 'ElasticNet', 'Random Forest', 'LightGBM', 'XGBoost'
+    nfolds: int
+        number of folds for GridSearch, default to be 10
+    optimized: bool
+        True if run GridSearchCV, False otherwise
 
-    :return:
-        r2_score and mean_squared_error for both train and test set
-    '''
+    Returns
+    -------
+    r2_score and mean_squared_error for both train and test set
+    """
 
     table = pd.DataFrame(index=['R2', 'RMSE'], columns=['Train', 'Test'])
     if model == 'LinearRegression':
