@@ -18,13 +18,13 @@ def classification_model(x_train, y_train, x_test, y_test, model, optimized=Fals
     """
     Parameters
     ----------
-    x_train, y_train, x_test, y_test: 
+    x_train, y_train, x_test, y_test: DataFrame
         train and test sets
-    model: 
+    model: str
         str, can be 'LogisticRegression', 'Ridge', 'SVC', 'KNC', 'Random Forest', 'LightGBM', 'XGBoost'
-    nfolds: 
+    nfolds: int
         number of folds for GridSearch, default to be 10
-    optimized: 
+    optimized: bool
         True if run GridSearchCV, False otherwise
 
     Returns
