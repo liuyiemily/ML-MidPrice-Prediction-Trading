@@ -1,4 +1,4 @@
-
+# Utility function to yield train and test index for rolling-window testing purpose
 class TimeSeriesCV:
     """
     Generates train_idx, test_idx tuples
