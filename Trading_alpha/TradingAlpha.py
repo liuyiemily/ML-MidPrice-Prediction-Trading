@@ -1,4 +1,4 @@
-# Helper functions for data preprocessing
+# ML strategy based on order book bid, ask, vol data
 import os
 import numpy as np
 import pandas as pd
