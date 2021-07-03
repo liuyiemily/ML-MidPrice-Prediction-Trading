@@ -1,4 +1,5 @@
-# ML strategy based on order book bid, ask, vol data
+## ML strategy based on order book bid, ask, vol data
+
 import os
 import numpy as np
 import pandas as pd
@@ -27,6 +28,9 @@ def process_data(path):
     return data
 
 def generate_features(data, freq, lags):
+    """
+    Generates features for training
+    """
     data = data.iloc[::freq, :]
     data = data.stack('tickers').swaplevel().sort_index(level='tickers')
     data['mid'] = (data['ask'] + data['bid']) / 2
@@ -41,12 +45,18 @@ def generate_features(data, freq, lags):
     return data.fillna(0)
 
 def train_test_split(data, train_size):
+    """
+    Split samples into training and testing set
+    """
     train_idx = int(data.shape[0] * train_size)
     train_data = data[:train_idx]
     test_data = data[train_idx:]
     return train_data, test_data
 
 def generate_signal(data, train_size, model, fitPCA=True, n_components=5):
+    """
+    Generate signals using ML models
+    """
     train_data, test_data = train_test_split(data, train_size)
     train_x = train_data.drop('returns', axis=1)
     train_y = np.sign(train_data['returns'])
@@ -72,6 +82,9 @@ def generate_signal(data, train_size, model, fitPCA=True, n_components=5):
     return test_data
 
 def generate_weights(data, train_size, model, fitPCA=True, n_components=5):
+    """
+    Equally weight the portfolio 
+    """
     unique_tickers = data.unstack('tickers')['ask'].columns.unique()
     weights = {}
     for i in range(unique_tickers.nunique()):
@@ -84,6 +97,9 @@ def generate_weights(data, train_size, model, fitPCA=True, n_components=5):
     return weights
 
 def compute_pnl(weights, data, cost=0.002):
+    """
+    Compute portfolio pnl and generate evaluation metrics 
+    """
     wgt_rtn = pd.concat([weights, data['returns'].loc[weights.index, :]], keys=('weights', 'returns'), axis=1)
     pnl = wgt_rtn.weights.mul(wgt_rtn.returns, axis=0).sum(axis=1)
     pnl = pnl.to_frame().rename(columns={0: 'pnl_1'})
