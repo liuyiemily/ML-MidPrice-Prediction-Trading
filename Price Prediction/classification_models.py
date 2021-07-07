@@ -29,7 +29,7 @@ def classification_model(x_train, y_train, x_test, y_test, model, optimized=Fals
 
     Returns
     -------
-    r2_score and mean_squared_error for both train and test set
+    F1, Accuracy, Precision and Recall for both train and test set
     """
 
     table = pd.DataFrame(index=['F1', 'Accuracy', 'Precision', 'Recall'], columns=['Train', 'Test'])
@@ -45,9 +45,9 @@ def classification_model(x_train, y_train, x_test, y_test, model, optimized=Fals
     elif model == 'Random Forest': # don't need to pre-scale for tree methods
         mdl = RandomForestClassifier(random_state=random_state)
     elif model == 'LightGBM':
-        mdl = lgbm.LGBMRegressor()
+        mdl = lgbm.LGBMClassifier(random_state=random_state, n_jobs=-1)
     elif model == 'XGBoost':
-        mdl = XGBClassifier()
+        mdl = XGBClassifier(random_state=random_state, n_jobs=-1)
     else:
         raise NotImplementedError
 
